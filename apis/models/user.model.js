@@ -35,6 +35,12 @@ const userSchema = mongoose.Schema(
             trim: true,
             maxlength: 100
         },
+        boards: [
+            {
+              type: mongoose.Types.ObjectId,
+              ref: 'board',
+            },
+        ],
        
     },
     {

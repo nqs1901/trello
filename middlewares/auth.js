@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const {SECRET_KEY} = require('../configs/env')
-const {User} = require("../api/models")
+const {User} = require("../apis/models")
 
 module.exports= async function(req, res, next) {
   if(req.headers.authorization){

@@ -3,7 +3,6 @@ const {userController} = require("../controllers")
 const {userValidation} = require('../validations')
 const validate = require('../../middlewares/validate')
 const auth = require('../../middlewares/auth')
-const checkRole = require('../../middlewares/role')
 
 const router = express.Router()
 
