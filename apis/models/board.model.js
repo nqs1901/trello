@@ -4,7 +4,7 @@ const validator = require('validator')
 
 const boardSchema = mongoose.Schema(
     {
-        title: {
+        name: {
             type: String,
             required: true,
             trim: true,

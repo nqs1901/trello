@@ -1,4 +1,4 @@
-const {User, Board} = require("../models")
+const {User, Board, List} = require("../models")
 const ApiError = require("../../utils/api-error")
 const httpStatus = require('http-status')
 const catchAsync = require('../../utils/catch-async')
@@ -37,6 +37,32 @@ const createBoard = catchAsync(async (req, res) => {
     res.status(httpStatus.CREATED).send({msg: 'Create Success!', board })
 })
 
+const updateBoard = catchAsync(async (req, res) => {
+    const board = await Board.findById(req.params.id)
+    if (!board) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Board not found')
+    }
+
+    Object.assign(board, req.body);
+    await board.save();
+
+    res.status(httpStatus.OK).send({msg: 'Update Success!', board })
+})
+
+const deleteBoard = catchAsync(async (req, res) => {
+    const board = await Board.findById(req.params.id)
+    if (!board) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Board not found')
+    }
+    for(const member of board.members) {
+        const userUpdate = await User.findByIdAndUpdate({_id: member.user}, {$pull: {boards: board._id}}, {new: true})
+        userUpdate.save()
+    }
+ 
+    await board.remove();
+    res.status(httpStatus.OK).send({ msg: 'Delete Success!'})
+})
+
 const addMember = catchAsync(async (req, res) => {
     const board = await Board.findById(req.params.id)
     if (!board) {
@@ -61,9 +87,24 @@ const addMember = catchAsync(async (req, res) => {
     res.status(httpStatus.OK).send({ msg: 'Add Success!',board})
 })
 
+const getListsOfBoard = catchAsync(async (req, res) => {
+    const board = await Board.findById(req.params.id)
+    if (!board) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Board not found')
+    }
+    const lists = [];
+    for (const list of board.lists) {
+        lists.push(await List.findById(list));
+    }
+    res.status(httpStatus.OK).send(lists);
+})
+
 module.exports ={
     getBoardById,
     getBoardsOfUser,
     createBoard,
-    addMember
+    deleteBoard,
+    updateBoard,
+    addMember,
+    getListsOfBoard
 }
