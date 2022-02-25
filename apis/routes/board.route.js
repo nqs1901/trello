@@ -17,7 +17,7 @@ router
 router.get('/', auth,boardController.getBoardsOfUser)
 router.post('/', auth,boardController.createBoard)
 
-router.patch('/:id/members/:idMember', auth,checkMember('admin'),boardController.addMember)
+router.patch('/members/:idMember', auth,checkMember('admin'),boardController.addMember)
 router.get('/:id/lists', auth,checkMember('admin','normal','observer'),boardController.getListsOfBoard)
 
 

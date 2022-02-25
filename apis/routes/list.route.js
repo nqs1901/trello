@@ -15,7 +15,7 @@ router
 
 
 router.post('/', auth,checkMember('admin','normal'),listController.createList)
-router.post('/:id/cards', auth,checkMember('admin','normal','observer'),listController.getCardsOfList)
+router.get('/:id/cards', auth,checkMember('admin','normal','observer'),listController.getCardsOfList)
 
 
 module.exports = router

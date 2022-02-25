@@ -5,6 +5,8 @@ const userRoute = require('./user.route')
 const boardRoute = require('./board.route')
 const listRoute = require('./list.route')
 const cardRoute = require('./card.route')
+const checkListRoute = require('./checkList.route')
+
 
 
 
@@ -31,6 +33,10 @@ const defaultRoutes = [
     {
         path: '/card',
         route: cardRoute,
+    },
+    {
+        path: '/checklist',
+        route: checkListRoute,
     },
 
 ]

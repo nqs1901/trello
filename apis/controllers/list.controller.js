@@ -13,6 +13,7 @@ const getListById = catchAsync(async (req, res) => {
 })
 
 const createList = catchAsync(async (req, res) => {
+    req.body.idBoard = req.headers.idboard;
     const list = await List.create(req.body)
     
     const board = await Board.findById(req.body.idBoard)

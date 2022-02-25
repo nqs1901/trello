@@ -64,7 +64,7 @@ const deleteBoard = catchAsync(async (req, res) => {
 })
 
 const addMember = catchAsync(async (req, res) => {
-    const board = await Board.findById(req.params.id)
+    const board = await Board.findById(req.headers.idboard)
     if (!board) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Board not found')
     }
@@ -77,7 +77,7 @@ const addMember = catchAsync(async (req, res) => {
         throw new ApiError(httpStatus.UNPROCESSABLE_ENTITY, 'Already member of board')
     }
 
-    board.members.some((member) => console.log(member.user))
+    // board.members.some((member) => console.log(member.user))
     user.boards.unshift(board.id);
     await user.save();
 
